@@ -15,8 +15,6 @@ const io = new socketIO.Server(server);
 
 ws.setup(io);
 
-log.info(config.isProd);
-
 app.use((req, res, next) => {
   req.log = log;
   req.io = io;

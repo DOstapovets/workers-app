@@ -1,11 +1,22 @@
 {
-  "name": "game",
+  "name": "app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./projects/cli/dist/index.js",
+  "bin": "./projects/cli/dist/index.js",
+  "pkg": {
+    "assets": "./projects/client/dist/**/*",
+    "scripts": "./projects/cli/dist/**/*.js",
+    "targets": [
+      "macos",
+      "linux"
+    ],
+    "outputPath": "dist"
+  },
   "scripts": {
     "dev": "pnpm run --parallel --stream  --filter \"./projects/**\" -r dev",
     "prebuild": "pnpm run lint",
+    "package": "pkg .",
     "build": "pnpm run --parallel --stream  --filter \"./projects/**\" -r build",
     "lint": "eslint ."
   },

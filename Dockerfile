@@ -1,10 +1,7 @@
-FROM node:18
+FROM ubuntu:20.04
 
-RUN npm i -g pnpm
+COPY ./dist/app-linux ./app
 
-COPY package.json .
-COPY .pnpmrc .
-COPY .pnpm-workspace .
+EXPOSE 8001
 
-RUN pnpm install
-
+CMD ./app start server
