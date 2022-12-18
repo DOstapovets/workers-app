@@ -1,3 +1,6 @@
-const { PORT = 8001 } = process.env;
+const { PORT = 8001, NODE_ENV } = process.env;
 
-export default { PORT };
+export default {
+  port: PORT,
+  isProd: NODE_ENV === 'production',
+};

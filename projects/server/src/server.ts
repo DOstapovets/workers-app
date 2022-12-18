@@ -1,3 +1,4 @@
+import path from 'path';
 import http from 'http';
 import express from 'express';
 import socketIO from 'socket.io';
@@ -14,6 +15,8 @@ const io = new socketIO.Server(server);
 
 ws.setup(io);
 
+log.info(config.isProd);
+
 app.use((req, res, next) => {
   req.log = log;
   req.io = io;
@@ -21,11 +24,16 @@ app.use((req, res, next) => {
   next();
 });
 
+const staticPath = path.join(__dirname, '../../client/dist');
+
+log.info(`Define static path:${staticPath}`);
+app.use(express.static(staticPath));
+
 app.use('/api', router);
 
 const run = () => {
-  server.listen(config.PORT, () => {
-    log.info(`Listening http://localhost:${config.PORT}`);
+  server.listen(config.port, () => {
+    log.info(`Listening http://localhost:${config.port}`);
   });
 };
 
