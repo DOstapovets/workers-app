@@ -1,24 +1,26 @@
 {
-  "name": "app",
+  "name": "app-root",
   "version": "1.0.0",
   "description": "",
-  "main": "./projects/cli/dist/index.js",
-  "bin": "./projects/cli/dist/index.js",
+  "main": "./apps/cli/dist/index.js",
+  "bin": "./apps/cli/dist/index.js",
   "pkg": {
-    "assets": "./projects/client/dist/**/*",
-    "scripts": "./projects/cli/dist/**/*.js",
+    "assets": "./apps/client/dist/**/*",
+    "scripts": "./apps/cli/dist/**/*.js",
     "targets": [
-      "macos",
       "linux"
     ],
     "outputPath": "dist"
   },
   "scripts": {
-    "dev": "pnpm run --parallel --stream  --filter \"./projects/**\" -r dev",
-    "prebuild": "pnpm run lint",
+    "start": "node ./apps/cli/dist/index.js",
+    "dev": "nx run-many --target=dev --verbose --exclude app-cli",
+    "lint": "eslint .",
+    "build": "nx run-many --target build",
+    "build:cli": "nx run app-cli:build",
     "package": "pkg .",
-    "build": "pnpm run --parallel --stream  --filter \"./projects/**\" -r build",
-    "lint": "eslint ."
+    "docker:build": "docker build . -t app:latest",
+    "graph": "nx graph"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +35,9 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.1",
-    "typescript": "^4.9.4"
-  }
+    "typescript": "^4.9.4",
+    "nx": "^15.3.3",
+    "pkg": "^5.8.0"
+  },
+  "dependencies": {}
 }

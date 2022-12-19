@@ -18,7 +18,10 @@ class StartCommand {
   run(name: string) {
     switch (name) {
       case 'server':
-        require('@app/server');
+        require('app-server');
+        break;
+      case 'worker':
+        require('app-worker');
         break;
       default:
         this.requestApp().then(({ serviceName }: { serviceName: string }) => {

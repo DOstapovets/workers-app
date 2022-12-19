@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-web
+  labels:
+    app: {{ .Release.Name }}-web
+spec:
+  ports:
+    - port: 8000
+      name: web
+  type: LoadBalancer
+  selector:
+    app: {{ .Release.Name }}-web
+status:
+  loadBalancer: {}

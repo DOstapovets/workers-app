@@ -1,0 +1,44 @@
+kind: Config
+apiVersion: 'skaffold/v2beta28'
+build:
+  artifacts:
+    - image: super-app
+      context: .
+      sync:
+        manual:
+          - src: apps/**/*
+            dest: .
+  tagPolicy:
+    gitCommit:
+      variant: TreeSha
+  local:
+    push: false
+    useBuildkit: true
+deploy:
+  helm:
+    releases:
+      - name: super-app
+        chartPath: ./helm
+        namespace: super-app
+        artifactOverrides:
+          image: super-app
+        imageStrategy:
+          helm: {}
+  statusCheckDeadlineSeconds: 600
+portForward:
+  - resourceType: service
+    resourceName: super-app-web
+    port: 8000
+    localPort: 4000
+profiles:
+  #
+  # Development
+  #
+  - name: dev
+    activation:
+      - command: dev
+    patches:
+      - op: add
+        path: /deploy/helm/releases/0/overrides
+        value:
+          mode: 'prod'

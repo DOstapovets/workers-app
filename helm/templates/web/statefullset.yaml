@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-web
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-web # has to match .spec.template.metadata.labels
+  serviceName: {{ .Release.Name }}-web
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-web # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: web
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if eq .Values.mode "dev" }}
+          args: ["npm", "run", "dev"]
+          {{- else }}
+          args: ["./app", "start", "server"]
+          {{- end }}
+          ports:
+            - containerPort: 8000
+              name: web
+          volumeMounts:
+            - name: www
+              mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+    - metadata:
+        name: www
+      spec:
+        accessModes: ['ReadWriteOnce']
+        storageClassName: 'hostpath'
+        resources:
+          requests:
+            storage: .5Gi

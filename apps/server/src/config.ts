@@ -1,4 +1,4 @@
-const { PORT = 8001, NODE_ENV } = process.env;
+const { PORT = 8000, NODE_ENV } = process.env;
 
 export default {
   port: PORT,

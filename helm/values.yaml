@@ -1,0 +1,6 @@
+mode: prod
+image:
+  repository: ghcr.io/digital-health-outcomes-models/ml-ops
+  tag: latest
+  pullPolicy: IfNotPresent
+  pullSecretName: githubcred

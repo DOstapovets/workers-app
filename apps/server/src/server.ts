@@ -1,6 +1,7 @@
 import path from 'path';
 import http from 'http';
 import express from 'express';
+import morgan from 'morgan';
 import socketIO from 'socket.io';
 
 import router from './router';
@@ -14,7 +15,13 @@ const server = http.createServer(app);
 const io = new socketIO.Server(server);
 
 ws.setup(io);
-
+app.use(
+  morgan('tiny', {
+    stream: {
+      write: (message) => log.http(message.trim()),
+    },
+  }),
+);
 app.use((req, res, next) => {
   req.log = log;
   req.io = io;
