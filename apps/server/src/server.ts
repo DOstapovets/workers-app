@@ -7,7 +7,7 @@ import socketIO from 'socket.io';
 import router from './router';
 import ws from './ws';
 import config from './config';
-import loggerFactory from './logger';
+import loggerFactory from 'app-logger';
 
 const log = loggerFactory('Server');
 const app = express();
