@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 
-import loggerFactory from '../logger';
+import loggerFactory from 'app-logger';
 
 const log = loggerFactory('WS');
 

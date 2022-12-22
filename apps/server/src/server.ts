@@ -4,10 +4,11 @@ import express from 'express';
 import morgan from 'morgan';
 import socketIO from 'socket.io';
 
+import loggerFactory from 'app-logger';
+
 import router from './router';
 import ws from './ws';
 import config from './config';
-import loggerFactory from 'app-logger';
 
 const log = loggerFactory('Server');
 const app = express();

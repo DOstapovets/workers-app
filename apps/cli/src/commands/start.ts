@@ -7,7 +7,16 @@ class StartCommand {
       name: 'serviceName',
       type: 'list',
       message: 'Select service to start',
-      choices: [{ name: 'Server', value: 'server' }],
+      choices: [
+        {
+          name: 'Server',
+          value: 'server',
+        },
+        {
+          name: 'Worker',
+          value: 'worker',
+        },
+      ],
     },
   ];
 

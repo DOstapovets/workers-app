@@ -1,6 +1,12 @@
 mode: prod
+storageClass: hostpath
 image:
   repository: ghcr.io/digital-health-outcomes-models/ml-ops
   tag: latest
   pullPolicy: IfNotPresent
   pullSecretName: githubcred
+
+# Redis
+redis:
+  sentinel:
+    enabled: true

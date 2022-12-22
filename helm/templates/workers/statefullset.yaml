@@ -1,28 +1,45 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: {{ .Release.Name }}-worker
+  name: {{ .Chart.Name }}-worker
 spec:
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-worker # has to match .spec.template.metadata.labels
+      app: {{ .Chart.Name }}-worker # has to match .spec.template.metadata.labels
   replicas: 1 # by default is 1
   minReadySeconds: 10 # by default is 0
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-worker # has to match .spec.selector.matchLabels
+        app: {{ .Chart.Name }}-worker # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 10
+      initContainers:
+        - name: {{.Release.Name}}-redis-check
+          image: busybox:1.31
+          command: ['sh', '-c', 'for i in {1..200}; do sleep 2; if nc -vz ${REDIS_HOST} 6379; then exit 0; fi; done; exit 1']
+          envFrom:
+            - configMapRef:
+                name: {{.Release.Name}}-config
       containers:
         - name: worker
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if eq .Values.mode "dev" }}
-          args: ["npm", "run", "dev"]
+          args: ["npm", "run", "dev:worker"]
           {{- else }}
           args: ["./app", "start", "worker"]
           {{- end }}
           ports:
             - containerPort: 8000
               name: worker
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-redis
+                  key: redis-password
+                  optional: false

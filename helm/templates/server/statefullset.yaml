@@ -15,18 +15,32 @@ spec:
         app: {{ .Release.Name }}-web # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 10
+      initContainers:
+      - name: {{.Release.Name}}-redis-check
+        image: busybox:1.31
+        command: ['sh', '-c', 'for i in {1..200}; do sleep 2; if nc -vz ${REDIS_HOST} 6379; then exit 0; fi; done; exit 1']
+        envFrom:
+          - configMapRef:
+              name: {{.Release.Name}}-config
       containers:
         - name: web
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if eq .Values.mode "dev" }}
-          args: ["npm", "run", "dev"]
+          args: ["npm", "run", "dev:server"]
           {{- else }}
           args: ["./app", "start", "server"]
           {{- end }}
           ports:
             - containerPort: 8000
               name: web
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-redis
+                  key: redis-password
+                  optional: false
           volumeMounts:
             - name: www
               mountPath: /usr/share/nginx/html

@@ -1,3 +1,7 @@
 name: super-app
 version: v1
 apiVersion: v1
+dependencies:
+  - name: redis
+    repository: https://charts.bitnami.com/bitnami
+    version: 17.3.17

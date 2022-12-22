@@ -1,0 +1,24 @@
+FROM node:18.12
+
+WORKDIR /app
+
+COPY .pnpmrc .
+
+COPY package.json .
+COPY pnpm-lock.yaml .
+COPY pnpm-workspace.yaml .
+
+COPY apps/cli/package.json ./apps/cli/package.json
+COPY apps/client/package.json ./apps/client/package.json
+COPY apps/server/package.json ./apps/server/package.json
+COPY apps/worker/package.json ./apps/worker/package.json
+
+COPY packages/config/package.json ./packages/config/package.json
+COPY packages/logger/package.json ./packages/logger/package.json
+COPY packages/redis-client/package.json ./packages/redis-client/package.json
+
+RUN npm i -g pnpm && pnpm install
+
+COPY . .
+
+RUN npm run build
