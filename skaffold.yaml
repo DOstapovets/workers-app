@@ -46,3 +46,6 @@ profiles:
         path: /deploy/helm/releases/0/overrides
         value:
           mode: 'dev'
+          redis:
+            replica:
+              replicaCount: 1

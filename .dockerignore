@@ -1,2 +1,15 @@
 node_modules
-dist
+npm-debug.log
+Dockerfile*
+.dockerignore
+.git
+.gitignore
+.cache
+README.md
+LICENSE
+.vscode
+helm
+charts
+skaffold.yaml
+.github
+.config

@@ -2,12 +2,9 @@
 
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const WorkboxPlugin = require('workbox-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = (env, argv) => {
-  const isProd = argv.mode == 'production'
-
   const config = {
     entry: "./src/index.ts",
     module: {
@@ -57,11 +54,7 @@ module.exports = (env, argv) => {
         title: 'My Awesome application',
         template: path.join(__dirname, './src/public/index.html'),
         filename: path.join(__dirname, './dist/index.html') //relative to root of the application
-      }),
-      new WorkboxPlugin.InjectManifest({
-        swSrc: './src/sw.ts',
-        swDest: 'service-worker.js',
-      }),
+      })
     ],
   }
 

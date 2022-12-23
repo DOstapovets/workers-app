@@ -8,6 +8,8 @@ const log = loggerFactory('RedisClient');
 const redisClient = new Redis({
   host: redisHost,
   password: redisPassword,
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
   name: 'mymaster',
   sentinels: [
     {

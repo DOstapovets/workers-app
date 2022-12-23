@@ -1,6 +1,7 @@
 import { Server, Socket } from 'socket.io';
 
 import loggerFactory from 'app-logger';
+import query from 'app-queue';
 
 const log = loggerFactory('WS');
 
@@ -10,10 +11,8 @@ export default {
       log.info(`Client connected: ${socket.id}`);
     });
 
-    setInterval(() => {
-      const randomNumber = Math.random() * 1000 - 500;
-
-      io.send({ x: randomNumber, y: Date.now() });
-    }, 300);
+    query.on('global:progress', (jobId, data) => {
+      io.send({ jobId, data });
+    });
   },
 };

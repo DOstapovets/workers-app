@@ -1,41 +1,28 @@
+import { WorkerApi } from '../core/api';
 import Chart from '../core/chart';
 import socket from '../core/ws/client';
 
-interface ChartData {
-  x: number;
-  y: number;
-}
+// interface ChartData {
+//   x: number;
+//   y: number;
+// }
 
 export default class App {
-  data: ChartData[] = [];
-
   chart: Chart;
 
   run() {
     const $canvas = document.getElementById('chart1') as HTMLCanvasElement;
     const $resetZoomBtn = document.getElementById('resetZoom');
+    const $addWorkerBtn = document.getElementById('addWorker');
 
     this.chart = new Chart($canvas, {
-      type: 'line',
+      type: 'scatter',
       data: {
-        labels: this.data.map((row) => row?.y),
-        datasets: [
-          {
-            label: 'Worker1',
-            data: this.data.map((row) => row.x),
-          },
-        ],
+        labels: [],
+        datasets: [],
       },
       options: {
-        scales: {
-          x: {
-            type: 'time',
-            time: {
-              unit: 'second',
-              parser: null,
-            },
-          },
-        },
+        scales: {},
         plugins: {
           zoom: {
             pan: {
@@ -58,16 +45,32 @@ export default class App {
     $resetZoomBtn.addEventListener('click', () => {
       this.chart.resetZoom();
     });
+    $addWorkerBtn.addEventListener('click', async () => {
+      const { jobId }: { jobId: string } = await WorkerApi.run();
+
+      this.chart.data.datasets.push({
+        label: jobId,
+        data: [],
+        showLine: false,
+        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
+          16,
+        )}`,
+      });
+      this.chart.update();
+    });
     this.subscribeOnData();
   }
 
   private subscribeOnData() {
-    socket.on('message', ({ x, y }) => {
-      this.chart.data.labels.push(y);
-      this.chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(x);
-      });
-      this.chart.update();
+    socket.on('message', ({ jobId, data: { x, y } }) => {
+      const dataset = this.chart.data.datasets.find(
+        ({ label }) => jobId === label,
+      );
+      if (dataset) {
+        this.chart.data.labels.push(y);
+        dataset?.data.push(x);
+        this.chart.update();
+      }
     });
   }
 }

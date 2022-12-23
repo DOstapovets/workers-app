@@ -1,3 +1,15 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+    name: {{ .Chart.Name }}-worker-scaler
+spec:
+    scaleTargetRef:
+        kind: ReplicaSet
+        name: {{ .Chart.Name }}-worker
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 80
+---
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
@@ -6,7 +18,6 @@ spec:
   selector:
     matchLabels:
       app: {{ .Chart.Name }}-worker # has to match .spec.template.metadata.labels
-  replicas: 1 # by default is 1
   minReadySeconds: 10 # by default is 0
   template:
     metadata:
@@ -14,6 +25,13 @@ spec:
         app: {{ .Chart.Name }}-worker # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 10
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+        limits:
+          cpu: 410m
+          memory: 512Mi
       initContainers:
         - name: {{.Release.Name}}-redis-check
           image: busybox:1.31
