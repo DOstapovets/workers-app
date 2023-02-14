@@ -22,4 +22,5 @@ RUN npm i -g pnpm && pnpm install
 
 COPY . .
 
+RUN npm run build:cli
 RUN npm run build

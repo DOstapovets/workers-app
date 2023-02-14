@@ -19,7 +19,7 @@ importers:
       prettier: ^2.8.1
       typescript: ^4.9.4
     devDependencies:
-      '@nrwl/nx-cloud': 15.0.2
+      '@nrwl/nx-cloud': 15.0.3
       '@typescript-eslint/eslint-plugin': 5.46.1_imrg37k3svwu377c6q7gkarwmi
       '@typescript-eslint/parser': 5.46.1_ha6vam6werchizxrnqvarmz2zu
       eslint: 8.29.0
@@ -75,7 +75,6 @@ importers:
       webpack: ^5.75.0
       webpack-cli: ^5.0.1
       webpack-dev-server: ^4.11.1
-      workbox-precaching: ^6.5.4
       workbox-webpack-plugin: ^6.5.4
     dependencies:
       axios: 1.2.1
@@ -86,7 +85,6 @@ importers:
       moment: 2.29.4
       phaser: 3.55.2
       socket.io-client: 4.5.4
-      workbox-precaching: 6.5.4
     devDependencies:
       '@babel/core': 7.20.5
       '@babel/preset-env': 7.20.2_@babel+core@7.20.5
@@ -1628,8 +1626,8 @@ packages:
       - debug
     dev: true
 
-  /@nrwl/nx-cloud/15.0.2:
-    resolution: {integrity: sha512-DaTASuXmGyQHMxJuK6y3f7fs+Q0qQCfYDIDVGK9muNwN/QItLeWdRNltLQxbrBeS112kQTu2FPsr0DmRD60+0A==}
+  /@nrwl/nx-cloud/15.0.3:
+    resolution: {integrity: sha512-KvwM8/IbCOlbWIzi+Tm14tJkEdQK3ruN6TPUmeKnkeFZsJyoFw4GCyKJMOLs8y4MQokHgskg3nbF822JLR9xJg==}
     hasBin: true
     dependencies:
       axios: 0.21.4
@@ -7203,6 +7201,7 @@ packages:
 
   /workbox-core/6.5.4:
     resolution: {integrity: sha512-OXYb+m9wZm8GrORlV2vBbE5EC1FKu71GGp0H4rjmxmF4/HLbMCoTFws87M3dFwgpmg0v00K++PImpNQ6J5NQ6Q==}
+    dev: true
 
   /workbox-expiration/6.5.4:
     resolution: {integrity: sha512-jUP5qPOpH1nXtjGGh1fRBa1wJL2QlIb5mGpct3NzepjGG2uFFBn4iiEBiI9GUmfAFR2ApuRhDydjcRmYXddiEQ==}
@@ -7232,6 +7231,7 @@ packages:
       workbox-core: 6.5.4
       workbox-routing: 6.5.4
       workbox-strategies: 6.5.4
+    dev: true
 
   /workbox-range-requests/6.5.4:
     resolution: {integrity: sha512-Je2qR1NXCFC8xVJ/Lux6saH6IrQGhMpDrPXWZWWS8n/RD+WZfKa6dSZwU+/QksfEadJEr/NfY+aP/CXFFK5JFg==}
@@ -7254,11 +7254,13 @@ packages:
     resolution: {integrity: sha512-apQswLsbrrOsBUWtr9Lf80F+P1sHnQdYodRo32SjiByYi36IDyL2r7BH1lJtFX8fwNHDa1QOVY74WKLLS6o5Pg==}
     dependencies:
       workbox-core: 6.5.4
+    dev: true
 
   /workbox-strategies/6.5.4:
     resolution: {integrity: sha512-DEtsxhx0LIYWkJBTQolRxG4EI0setTJkqR4m7r4YpBdxtWJH1Mbg01Cj8ZjNOO8etqfA3IZaOPHUxCs8cBsKLw==}
     dependencies:
       workbox-core: 6.5.4
+    dev: true
 
   /workbox-streams/6.5.4:
     resolution: {integrity: sha512-FXKVh87d2RFXkliAIheBojBELIPnWbQdyDvsH3t74Cwhg0fDheL1T8BqSM86hZvC0ZESLsznSYWw+Va+KVbUzg==}
