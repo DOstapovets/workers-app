@@ -23,11 +23,11 @@ spec:
           - configMapRef:
               name: {{.Release.Name}}-config
       containers:
-        - name: web
+        - name: server
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if eq .Values.mode "dev" }}
-          args: ["npm", "run", "watch:dev"]
+          args: ["npm", "run", "dev:server"]
           {{- else }}
           args: ["./app", "start", "server"]
           {{- end }}
@@ -44,15 +44,22 @@ spec:
                   name: {{ .Release.Name }}-redis
                   key: redis-password
                   optional: false
-          volumeMounts:
-            - name: www
-              mountPath: /usr/share/nginx/html
-  volumeClaimTemplates:
-    - metadata:
-        name: www
-      spec:
-        accessModes: ['ReadWriteOnce']
-        storageClassName: 'hostpath'
-        resources:
-          requests:
-            storage: .5Gi
+        {{- if eq .Values.mode "dev" }}
+        - name: watch
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ["npm", "run", "watch"]
+          ports:
+            - containerPort: 8000
+              name: web
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-redis
+                  key: redis-password
+                  optional: false
+          {{- end }}

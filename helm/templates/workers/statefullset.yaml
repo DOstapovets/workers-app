@@ -15,6 +15,7 @@ kind: ReplicaSet
 metadata:
   name: {{ .Chart.Name }}-worker
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: {{ .Chart.Name }}-worker # has to match .spec.template.metadata.labels
@@ -25,13 +26,6 @@ spec:
         app: {{ .Chart.Name }}-worker # has to match .spec.selector.matchLabels
     spec:
       terminationGracePeriodSeconds: 10
-      resources:
-        requests:
-          cpu: 250m
-          memory: 256Mi
-        limits:
-          cpu: 410m
-          memory: 512Mi
       initContainers:
         - name: {{.Release.Name}}-redis-check
           image: busybox:1.31

@@ -24,8 +24,6 @@ deploy:
       - name: super-app
         chartPath: ./helm
         namespace: super-app
-        artifactOverrides:
-          image: super-app
         imageStrategy:
           helm: {}
   statusCheckDeadlineSeconds: 600
@@ -43,9 +41,28 @@ profiles:
       - command: dev
     patches:
       - op: add
+        path: /deploy/helm/releases/0/artifactOverrides
+        value:
+          image: super-app
+      - op: add
         path: /deploy/helm/releases/0/overrides
         value:
           mode: 'dev'
-          redis:
-            replica:
-              replicaCount: 1
+          # redis:
+          #   replica:
+          #     replicaCount: 1
+  - name: qa
+    patches:
+      - op: replace
+        path: /build/artifacts/0/image
+        value: ghcr.io/digital-health-outcomes-models/app-worker
+      - op: add
+        path: /deploy/helm/releases/0/artifactOverrides
+        value:
+          image: ghcr.io/digital-health-outcomes-models/app-worker
+      - op: add
+        path: /deploy/helm/releases/0/overrides
+        value:
+          mode: 'dev'
+          image:
+            tag: 1.0.0

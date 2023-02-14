@@ -1,7 +1,7 @@
 mode: prod
 storageClass: hostpath
 image:
-  repository: ghcr.io/digital-health-outcomes-models/ml-ops
+  repository: ghcr.io/digital-health-outcomes-models/app-worker
   tag: latest
   pullPolicy: IfNotPresent
   pullSecretName: githubcred
