@@ -1,6 +1,8 @@
+import './registerServiceWorker';
+
 import { createApp } from 'vue';
 
-import './registerServiceWorker';
+import AppSdk from 'app-sdk';
 
 import router from './router';
 import store from './store';
@@ -8,4 +10,10 @@ import vuetify from './vuetify';
 
 import App from './App.vue';
 
-createApp(App).use(vuetify).use(store).use(router).mount('#app');
+const app = createApp(App).use(vuetify).use(store).use(router);
+
+app.config.globalProperties.$sdk = new AppSdk(() =>
+  localStorage.getItem('token'),
+);
+
+app.mount('#app');
