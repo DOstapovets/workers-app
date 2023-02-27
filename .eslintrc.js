@@ -13,7 +13,9 @@ module.exports = {
   },
   rules: {
     "prettier/prettier": 2,
-    "class-methods-use-this": 0
+    "class-methods-use-this": 0,
+    "consistent-return": 0,
+    "no-underscore-dangle": 0
   },
   ignorePatterns: ['.eslintrc.js', '**/dist/**'],
   plugins: ['import', 'prettier', '@typescript-eslint'],

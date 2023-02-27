@@ -13,6 +13,17 @@ class UserService {
     return UserModel.find(params);
   }
 
+  getUser(params: FilterQuery<User> = {}) {
+    log.debug('Get User');
+
+    return UserModel.findOne(params);
+  }
+
+  getUserById(id: Types.ObjectId | string) {
+    log.debug(`Get User(${id})`);
+    return UserModel.findById(id);
+  }
+
   async createUser(params: AnyKeys<User>) {
     log.debug('Create User');
     log.debug(params);

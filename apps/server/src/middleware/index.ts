@@ -1,4 +1,4 @@
-import type { Application } from 'express';
+import type { Application, Request, Response, NextFunction } from 'express';
 
 import path from 'path';
 import morgan from 'morgan';
@@ -10,6 +10,7 @@ import loggerFactory from 'app-logger';
 import router from '../router';
 import { bindWsServer } from '../ws';
 import sessionMiddleware from '../utils/session';
+import { registerPassport } from '../utils/passport';
 
 const log = loggerFactory('Middleware');
 
@@ -17,6 +18,7 @@ export default (app: Application) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(sessionMiddleware);
+  registerPassport(app);
 
   app.use(
     morgan('tiny', {
@@ -42,5 +44,11 @@ export default (app: Application) => {
 
   app.get('*', (req, res) => {
     res.sendFile(path.join(staticPath, 'index.html'));
+  });
+
+  app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    if (res.headersSent) return next(err);
+
+    res.status(400).json({ message: err?.message });
   });
 };
