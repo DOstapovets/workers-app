@@ -47,10 +47,19 @@ profiles:
       - op: add
         path: /deploy/helm/releases/0/overrides
         value:
-          mode: 'dev'
-          # redis:
-          #   replica:
-          #     replicaCount: 1
+          mode: 'development'
+          redis:
+            replica:
+              replicaCount: 1
+          mongodb:
+            useStatefulSet: true
+            auth:
+              usernames:
+                - 'admin'
+              passwords:
+                - 'password'
+              databases:
+                - 'db'
   - name: qa
     patches:
       - op: replace
@@ -63,6 +72,6 @@ profiles:
       - op: add
         path: /deploy/helm/releases/0/overrides
         value:
-          mode: 'dev'
+          mode: 'development'
           image:
             tag: 1.0.0

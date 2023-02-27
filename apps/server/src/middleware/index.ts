@@ -14,6 +14,8 @@ import sessionMiddleware from '../utils/session';
 const log = loggerFactory('Middleware');
 
 export default (app: Application) => {
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
   app.use(sessionMiddleware);
 
   app.use(

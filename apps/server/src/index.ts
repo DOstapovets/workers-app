@@ -1,3 +1,5 @@
-import Server from './server';
+import connectDB from 'app-db';
 
-Server();
+import startServer from './server';
+
+connectDB().then(() => startServer());

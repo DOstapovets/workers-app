@@ -27,17 +27,12 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       initContainers:
-        - name: {{.Release.Name}}-redis-check
-          image: busybox:1.31
-          command: ['sh', '-c', 'for i in {1..200}; do sleep 2; if nc -vz ${REDIS_HOST} 6379; then exit 0; fi; done; exit 1']
-          envFrom:
-            - configMapRef:
-                name: {{.Release.Name}}-config
+      {{ include "initCheckContainers" . | nindent 6}}
       containers:
         - name: worker
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if eq .Values.mode "dev" }}
+          {{- if eq .Values.mode "development" }}
           args: ["npm", "run", "dev:worker"]
           {{- else }}
           args: ["./app", "start", "worker"]
@@ -48,6 +43,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-config
+            - secretRef:
+                name: {{ .Release.Name }}
           env:
             - name: REDIS_PASSWORD
               valueFrom:

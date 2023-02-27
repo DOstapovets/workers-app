@@ -1,5 +1,5 @@
 {
-  "name": "app-logger",
+  "name": "app-db",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -12,8 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "app-logger": "workspace:*",
     "app-config": "workspace:*",
-    "winston": "^3.8.2"
+    "app-types": "workspace:*",
+    "mongoose": "^6.10.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.13",

@@ -5,3 +5,6 @@ dependencies:
   - name: redis
     repository: https://charts.bitnami.com/bitnami
     version: 17.3.17
+  - name: mongodb
+    repository: https://charts.bitnami.com/bitnami
+    version: 13.8.1

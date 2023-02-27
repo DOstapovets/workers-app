@@ -1,4 +1,4 @@
-mode: prod
+mode: production
 storageClass: hostpath
 image:
   repository: ghcr.io/digital-health-outcomes-models/app-worker
@@ -10,3 +10,5 @@ image:
 redis:
   sentinel:
     enabled: true
+#MongoDB
+# mongodb:

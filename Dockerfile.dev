@@ -13,9 +13,11 @@ COPY apps/client/package.json ./apps/client/package.json
 COPY apps/server/package.json ./apps/server/package.json
 COPY apps/worker/package.json ./apps/worker/package.json
 
+COPY packages/types/package.json ./packages/types/package.json
 COPY packages/config/package.json ./packages/config/package.json
 COPY packages/logger/package.json ./packages/logger/package.json
 COPY packages/queue/package.json ./packages/queue/package.json
+COPY packages/db/package.json ./packages/db/package.json
 COPY packages/redis-client/package.json ./packages/redis-client/package.json
 
 RUN npm i -g pnpm && pnpm install

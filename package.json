@@ -15,8 +15,8 @@
   "scripts": {
     "start": "node ./apps/cli/dist/index.js",
     "watch:dev": "run-p dev:server watch",
-    "dev:server": "pnpm run --filter=app-cli --stream dev -- start server",
-    "dev:worker": "pnpm run --filter=app-cli --stream dev -- start worker",
+    "dev:server": "pnpm run --filter=app-server dev",
+    "dev:worker": "pnpm run --filter=app-worker dev",
     "watch": "pnpm run -filter=!app-cli --parallel watch",
     "lint": "eslint .",
     "build": "pnpm run --stream --parallel build",
