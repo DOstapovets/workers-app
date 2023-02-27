@@ -44,22 +44,3 @@ spec:
                   name: {{ .Release.Name }}-redis
                   key: redis-password
                   optional: false
-        {{- if eq .Values.mode "dev" }}
-        - name: watch
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args: ["npm", "run", "watch"]
-          ports:
-            - containerPort: 8000
-              name: web
-          envFrom:
-            - configMapRef:
-                name: {{ .Release.Name }}-config
-          env:
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-redis
-                  key: redis-password
-                  optional: false
-          {{- end }}
