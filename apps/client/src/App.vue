@@ -1,12 +1,12 @@
 <template>
-   <v-app id="inspire">
+  <v-app id="inspire">
     <!-- <app-system-bar /> -->
 
     <app-navigation />
 
     <!-- <app-header /> -->
-    <v-main>
-      <router-view/>
+    <v-main col>
+      <router-view />
     </v-main>
   </v-app>
 </template>
@@ -21,10 +21,8 @@ import AppHeader from './components/common/AppHeader.vue';
 @Options({
   components: { AppHeader, AppSystemBar, AppNavigation },
 })
-export default class App extends Vue {}
+export default class App extends Vue { }
 </script>
 
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
