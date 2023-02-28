@@ -14,8 +14,8 @@
           <v-icon>mdi-chat</v-icon>
         </v-list-item>
 
-        <v-list-item to="Users">
-          <v-icon>mdi-accounts</v-icon>
+        <v-list-item to="users">
+          <v-icon>mdi-account-multiple</v-icon>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

@@ -26,7 +26,6 @@ class UserService {
 
   async createUser(params: AnyKeys<User>) {
     log.debug('Create User');
-    log.debug(params);
 
     const passHash = await generateHash(params.passHash);
 

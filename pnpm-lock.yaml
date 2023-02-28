@@ -70,6 +70,7 @@ importers:
       '@vue/cli-service': ~5.0.0
       '@vue/eslint-config-typescript': ^9.1.0
       app-sdk: workspace:*
+      app-types: workspace:*
       core-js: ^3.8.3
       eslint: ^7.32.0
       eslint-plugin-vue: ^8.0.3
@@ -84,6 +85,7 @@ importers:
       vuex: ^4.0.0
     dependencies:
       app-sdk: link:../../packages/sdk
+      app-types: link:../../packages/types
       core-js: 3.28.0
       register-service-worker: 1.7.2
       vue: 3.2.47
