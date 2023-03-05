@@ -5,11 +5,9 @@ import type socketIO from 'socket.io';
 
 import Queue from 'app-queue';
 
-export {};
-
 declare global {
   namespace Express {
-    class User extends AppUser {}
+    export interface User extends AppUser {}
     export interface Request {
       log: Logger;
       queue: typeof Queue;
@@ -17,3 +15,5 @@ declare global {
     }
   }
 }
+
+export {};

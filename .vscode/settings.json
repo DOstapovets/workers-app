@@ -1,5 +1,5 @@
 {
   "explorer.excludeGitIgnore": true,
   "editor.formatOnSave": true,
-  "cSpell.words": ["vuetify"]
+  "cSpell.words": ["blurhash", "vuetify"]
 }

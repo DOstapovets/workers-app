@@ -11,6 +11,7 @@
   "dependencies": {
     "app-sdk": "workspace:*",
     "app-types": "workspace:*",
+    "blurhash": "^2.0.5",
     "core-js": "^3.8.3",
     "register-service-worker": "^1.7.2",
     "vue": "^3.2.13",

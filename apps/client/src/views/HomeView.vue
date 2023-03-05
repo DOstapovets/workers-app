@@ -1,11 +1,11 @@
 <template>
-  <div class="home">
+  <v-container>
     <img alt="Vue logo" src="../assets/logo.png">
-  </div>
+  </v-container>
 </template>
 
 <script lang="ts">
 import { Vue } from 'vue-class-component';
 
-export default class HomeView extends Vue {}
+export default class HomeView extends Vue { }
 </script>

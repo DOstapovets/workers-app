@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
 
-import UserTable from '../components/Users/UserTable.vue';
+import UserTable from '../components/users/UserTable.vue';
 
 @Options({
   components: { UserTable }

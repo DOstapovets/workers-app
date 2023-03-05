@@ -1,5 +1,7 @@
 FROM node:18.12
 
+RUN mkdir /uploads
+
 WORKDIR /app
 
 COPY .pnpmrc .
@@ -14,6 +16,7 @@ COPY apps/server/package.json ./apps/server/package.json
 COPY apps/worker/package.json ./apps/worker/package.json
 
 COPY packages/sdk/package.json ./packages/sdk/package.json
+COPY packages/utils/package.json ./packages/utils/package.json
 COPY packages/types/package.json ./packages/types/package.json
 COPY packages/config/package.json ./packages/config/package.json
 COPY packages/logger/package.json ./packages/logger/package.json

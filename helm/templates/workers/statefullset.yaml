@@ -4,14 +4,14 @@ metadata:
     name: {{ .Chart.Name }}-worker-scaler
 spec:
     scaleTargetRef:
-        kind: ReplicaSet
+        kind: StatefulSet
         name: {{ .Chart.Name }}-worker
     minReplicas: 2
     maxReplicas: 4
     targetCPUUtilizationPercentage: 80
 ---
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: StatefulSet
 metadata:
   name: {{ .Chart.Name }}-worker
 spec:
@@ -20,7 +20,7 @@ spec:
     matchLabels:
       app: {{ .Chart.Name }}-worker # has to match .spec.template.metadata.labels
   minReadySeconds: 10 # by default is 0
-  template:
+  template: 
     metadata:
       labels:
         app: {{ .Chart.Name }}-worker # has to match .spec.selector.matchLabels

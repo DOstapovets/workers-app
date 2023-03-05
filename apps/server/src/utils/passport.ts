@@ -40,7 +40,7 @@ passport.use(
 
       if (!user) done(false);
 
-      if (await compareHash(password, `${user?.passHash}`)) {
+      if (await compareHash(password, `${user?.password}`)) {
         done(null, user?.toObject());
       } else {
         done(false);

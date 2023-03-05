@@ -7,8 +7,8 @@ import * as config from 'app-config';
 import useMiddleware from './middleware';
 import { createWsServer } from './ws';
 
-const log = loggerFactory('Server');
 const app = express();
+const log = loggerFactory('Server');
 const server = http.createServer(app);
 
 createWsServer(server);

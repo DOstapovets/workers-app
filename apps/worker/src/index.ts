@@ -1,12 +1,14 @@
-import loggerFactory from 'app-logger';
 import queue from 'app-queue';
+import connectDB from 'app-db';
+import loggerFactory from 'app-logger';
+import { JobType } from 'app-types';
+
+import uploadImageHandler from './workers/upload-image';
 
 const log = loggerFactory('Worker');
 
-log.info('Init worker');
-queue.process('worker', 2, (job, done) => {
-  log.info(`Starting worker ${job.id}`);
+connectDB().then(() => {
+  log.info('Initialize worker');
 
-  log.info(`Finishing worker ${job.id}`);
-  done();
+  queue.process(JobType.UploadImage, 2, uploadImageHandler);
 });

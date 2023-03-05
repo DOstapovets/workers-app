@@ -1,25 +1,26 @@
 <template>
-  <v-navigation-drawer
-      absolute
-      rail
-    >
-      <v-list>
-        <v-list-item link to="/" >
-          <v-icon>mdi-apps</v-icon>
-        </v-list-item>
+  <v-navigation-drawer absolute rail>
+    <v-list>
+      <v-list-item link to="/">
+        <v-icon>mdi-apps</v-icon>
+      </v-list-item>
 
-        <v-divider class="mx-3 my-5"></v-divider>
+      <v-divider class="mx-3 my-5"></v-divider>
 
-        <v-list-item to="chat">
-          <v-icon>mdi-chat</v-icon>
-        </v-list-item>
+      <v-list-item to="chat">
+        <v-icon>mdi-chat</v-icon>
+      </v-list-item>
 
-        <v-list-item to="users">
-          <v-icon>mdi-account-multiple</v-icon>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <!-- <v-navigation-drawer
+      <v-list-item to="users">
+        <v-icon>mdi-account-multiple</v-icon>
+      </v-list-item>
+
+      <v-list-item to="gallery">
+        <v-icon>mdi-cloud-upload-outline</v-icon>
+      </v-list-item>
+    </v-list>
+  </v-navigation-drawer>
+  <!-- <v-navigation-drawer
       width="244"
     >
       <v-sheet

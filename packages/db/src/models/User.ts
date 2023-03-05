@@ -14,11 +14,19 @@ const userSchema = new Schema(
       require: true,
       unique: true,
     },
+    avatar: {
+      ref: 'upload',
+      type: Schema.Types.ObjectId,
+    },
+    cover: {
+      ref: 'upload',
+      type: Schema.Types.ObjectId,
+    },
     fullName: {
       type: String,
       require: true,
     },
-    passHash: {
+    password: {
       type: String,
     },
   },

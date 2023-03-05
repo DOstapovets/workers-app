@@ -1,3 +1,14 @@
-export { default as HealthRouter } from './health';
-export { default as UserRouter } from './user';
-export { default as AuthRouter } from './auth';
+import { Router } from 'express';
+import HealthRouter from './health';
+import UserRouter from './user';
+import AuthRouter from './auth';
+import UploadsRouter from './uploads';
+
+const routes: [string, Router][] = [
+  ['/health', HealthRouter],
+  ['/user', UserRouter],
+  ['/auth', AuthRouter],
+  ['/uploads', UploadsRouter],
+];
+
+export default routes;

@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { AuthRouter, HealthRouter, UserRouter } from './routes';
+
+import routes from './routes';
 
 const router = Router();
 
-router.use('/health', HealthRouter);
-router.use('/user', UserRouter);
-router.use('/auth', AuthRouter);
+routes.forEach(([path, route]) => {
+  router.use(path, route);
+});
 
 export default router;

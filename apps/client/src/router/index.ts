@@ -20,6 +20,12 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "chat" */ '../views/ChatView.vue'),
   },
   {
+    path: '/gallery',
+    name: 'gallery',
+    component: () =>
+      import(/* webpackChunkName: "chat" */ '../views/UploadsView.vue'),
+  },
+  {
     path: '/about',
     name: 'about',
     component: () =>
