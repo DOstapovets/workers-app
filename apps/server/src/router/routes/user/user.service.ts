@@ -10,7 +10,8 @@ const log = loggerFactory('UserSrv');
 class UserService {
   getUsers(params: FilterQuery<User> = {}) {
     log.debug('Get Users');
-    return UserModel.find(params).populate('avatar cover');
+
+    return UserModel.find(params, '-password').populate('avatar cover');
   }
 
   getUser(params: FilterQuery<User> = {}) {
@@ -21,6 +22,7 @@ class UserService {
 
   getUserById(id: Types.ObjectId | string) {
     log.debug(`Get User(${id})`);
+
     return UserModel.findById(id).populate('avatar cover');
   }
 
@@ -34,14 +36,17 @@ class UserService {
 
   async updateUserById(id: string, data: AnyKeys<User>) {
     log.debug('Update User');
+
     if (data.avatar) {
       data.avatar = await UploadModel.findById(data.avatar);
     }
+
     return UserModel.findByIdAndUpdate(id, { $set: data }, { new: true });
   }
 
   deleteUserById(id: Types.ObjectId | string) {
     log.debug('Delete User');
+
     return UserModel.findByIdAndDelete(id, { returnDocument: 'before' });
   }
 }

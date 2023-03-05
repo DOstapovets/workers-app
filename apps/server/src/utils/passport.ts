@@ -20,8 +20,9 @@ passport.use(
       secretOrKey: 'your_jwt_secret',
     },
     async (jwtPayload, done) => {
-      log.info('Verify jwt');
       try {
+        log.info('Verify jwt');
+
         const user = await userService.getUserById(jwtPayload.sub);
 
         done(null, user || false);
@@ -36,6 +37,7 @@ passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
       log.info('Verify local');
+
       const user = await userService.getUser({ username });
 
       if (!user) done(false);
@@ -52,10 +54,13 @@ passport.use(
 );
 
 passport.serializeUser((user: Express.User, cb) => {
+  log.debug(`Serialize user ${user._id}`);
   cb(null, (user as User)._id);
 });
 
 passport.deserializeUser(async (id: string, cb) => {
+  log.debug('Deserialize user');
+
   const user = await userService.getUserById(id);
 
   cb(null, user);
@@ -74,6 +79,7 @@ const loginMiddleware = (req: Request, res: Response, next: NextFunction) =>
     { session: false },
     (error: any, user: User) => {
       log.info('Login local');
+
       if (error) return next(error);
 
       if (!user) {
