@@ -3,11 +3,16 @@ import type { Application, NextFunction, Request, Response } from 'express';
 
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
+import {
+  Strategy as JWTStrategy,
+  ExtractJwt,
+  VerifiedCallback,
+} from 'passport-jwt';
 
 import loggerFactory from 'app-logger';
 import { compareHash } from './bcrypt';
+import { sessionService } from './session/session.service';
 
 import userService from '../router/routes/user/user.service';
 
@@ -18,15 +23,23 @@ passport.use(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: 'your_jwt_secret',
+      passReqToCallback: true,
     },
-    async (jwtPayload, done) => {
+    // eslint-disable-next-line prefer-arrow-callback, func-names
+    async function (req: Request, jwtPayload: any, done: VerifiedCallback) {
       try {
-        log.info('Verify jwt');
+        log.debug('Verify JWT');
 
-        const user = await userService.getUserById(jwtPayload.sub);
+        const session = await sessionService.get(jwtPayload.sub);
 
-        done(null, user || false);
+        if (!session) return done(null, false);
+
+        req.session = session;
+        await session.touch();
+
+        done(null, session?.user || false);
       } catch (err) {
+        log.error((err as Error)?.message || err);
         done(err);
       }
     },
@@ -36,63 +49,56 @@ passport.use(
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      log.info('Verify local');
+      log.debug('Verify local');
 
       const user = await userService.getUser({ username });
 
       if (!user) done(false);
 
-      if (await compareHash(password, `${user?.password}`)) {
-        done(null, user?.toObject());
+      const { password: passHash, ...userWithoutPassword } =
+        user?.toObject() as User;
+
+      if (await compareHash(password, `${passHash}`)) {
+        done(null, userWithoutPassword);
       } else {
-        done(false);
+        done(new Error('Incorrect username/password'));
       }
     } catch (err) {
+      log.error((err as Error)?.message || err);
       done(err);
     }
   }),
 );
 
-passport.serializeUser((user: Express.User, cb) => {
-  log.debug(`Serialize user ${user._id}`);
-  cb(null, (user as User)._id);
-});
-
-passport.deserializeUser(async (id: string, cb) => {
-  log.debug('Deserialize user');
-
-  const user = await userService.getUserById(id);
-
-  cb(null, user);
-});
-
 const registerPassport = (app: Application) => {
   log.debug('Register passport');
 
   app.use(passport.initialize());
-  app.use(passport.session());
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    req.sessionService = sessionService;
+
+    next();
+  });
 };
 
 const loginMiddleware = (req: Request, res: Response, next: NextFunction) =>
   passport.authenticate(
     'local',
     { session: false },
-    (error: any, user: User) => {
+    async (error: any, user: User) => {
       log.info('Login local');
 
       if (error) return next(error);
 
-      if (!user) {
-        return res.status(401).send('Unauthorized');
-      }
+      if (!user) return next(new Error('Incorrect username/password'));
 
-      req.logIn(user, (err) => {
-        if (err) return next(err);
+      const sid = sessionService.generateSid();
 
-        const token = jwt.sign({ sub: user._id }, 'your_jwt_secret');
+      await sessionService.set(sid, { user, lastEnteredAt: Date.now() });
 
-        return res.json({ token });
-      });
+      const token = jwt.sign({ sub: sid }, 'your_jwt_secret');
+
+      return res.json({ token });
     },
   )(req, res, next);
 

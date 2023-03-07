@@ -9,7 +9,6 @@ import loggerFactory from 'app-logger';
 
 import router from '../router';
 import { bindWsServer } from '../ws';
-import sessionMiddleware from '../utils/session';
 import { registerPassport } from '../utils/passport';
 
 const log = loggerFactory('Middleware');
@@ -18,9 +17,6 @@ export default (app: Application) => {
   // Register body parser middleware
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
-  // Register session middleware
-  app.use(sessionMiddleware);
 
   // Register passport middleware
   registerPassport(app);

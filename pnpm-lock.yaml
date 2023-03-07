@@ -79,8 +79,10 @@ importers:
       sass: ^1.32.7
       sass-loader: ^12.0.0
       typescript: ~4.5.5
+      vee-validate: ^4.7.4
       vue: ^3.2.13
       vue-class-component: ^8.0.0-0
+      vue-property-decorator: ^9.1.2
       vue-router: ^4.0.3
       vuetify: ^3.1.6
       vuex: ^4.0.0
@@ -90,8 +92,10 @@ importers:
       blurhash: 2.0.5
       core-js: 3.28.0
       register-service-worker: 1.7.2
+      vee-validate: 4.7.4_vue@3.2.47
       vue: 3.2.47
       vue-class-component: 8.0.0-rc.1_vue@3.2.47
+      vue-property-decorator: 9.1.2_e2doaayoza62zgnirihdqfeczy
       vue-router: 4.1.6_vue@3.2.47
       vuetify: 3.1.6_vue@3.2.47
       vuex: 4.1.0_vue@3.2.47
@@ -118,7 +122,6 @@ importers:
     specifiers:
       '@types/bcrypt': ^5.0.0
       '@types/express': ^4.17.14
-      '@types/express-session': ^1.17.6
       '@types/jsonwebtoken': ^9.0.1
       '@types/morgan': ^1.9.3
       '@types/multer': ^1.4.7
@@ -137,9 +140,8 @@ importers:
       app-worker: workspace:*
       axios: ^1.3.4
       bcrypt: ^5.1.0
-      connect-redis: ^7.0.0
       express: ^4.18.2
-      express-session: ^1.17.3
+      ioredis: ^5.2.4
       jsonwebtoken: ^9.0.0
       morgan: ^1.10.0
       multer: 1.4.5-lts.1
@@ -151,7 +153,6 @@ importers:
       typescript: ^4.9.4
       uuid: ^9.0.0
     dependencies:
-      '@types/passport-local': 1.0.35
       app-config: link:../../packages/config
       app-db: link:../../packages/db
       app-logger: link:../../packages/logger
@@ -162,9 +163,7 @@ importers:
       app-worker: link:../worker
       axios: 1.3.4
       bcrypt: 5.1.0
-      connect-redis: 7.0.0
       express: 4.18.2
-      express-session: 1.17.3
       jsonwebtoken: 9.0.0
       morgan: 1.10.0
       multer: 1.4.5-lts.1
@@ -176,14 +175,15 @@ importers:
     devDependencies:
       '@types/bcrypt': 5.0.0
       '@types/express': 4.17.15
-      '@types/express-session': 1.17.6
       '@types/jsonwebtoken': 9.0.1
       '@types/morgan': 1.9.3
       '@types/multer': 1.4.7
       '@types/node': 18.11.17
       '@types/passport': 1.0.12
       '@types/passport-jwt': 3.0.8
+      '@types/passport-local': 1.0.35
       '@types/uuid': 9.0.1
+      ioredis: 5.2.4
       ts-node-dev: 2.0.0_moeqx3xmzxqxagf2sz6mqkbb7m
       typescript: 4.9.4
 
@@ -2859,6 +2859,7 @@ packages:
     dependencies:
       '@types/connect': 3.4.35
       '@types/node': 18.11.17
+    dev: true
 
   /@types/bonjour/3.5.10:
     resolution: {integrity: sha512-p7ienRMiS41Nu2/igbJxxLDWrSZ0WxM8UQgCeO9KhoVF7cOVFkrKsiDr1EsJIla8vV3oEEjGcz11jc5yimhzZw==}
@@ -2877,6 +2878,7 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 18.11.17
+    dev: true
 
   /@types/cookie/0.4.1:
     resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
@@ -2916,11 +2918,6 @@ packages:
       '@types/node': 18.11.17
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
-
-  /@types/express-session/1.17.6:
-    resolution: {integrity: sha512-L6sB04HVA4HEZo1hDL65JXdZdBJtzZnCiw/P7MnO4w6746tJCNtXlHtzEASyI9ccn9zyOw6IbqQuhVa03VpO4w==}
-    dependencies:
-      '@types/express': 4.17.15
     dev: true
 
   /@types/express/4.17.15:
@@ -2930,6 +2927,7 @@ packages:
       '@types/express-serve-static-core': 4.17.31
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.0
+    dev: true
 
   /@types/html-minifier-terser/6.1.0:
     resolution: {integrity: sha512-oh/6byDPnL1zeNXFrDXFLyZjkr1MsBG667IM792caf1L2UPOOMf65NFzjUH/ltyfwjAGfs1rsX1eftK0jC/KIg==}
@@ -2964,6 +2962,7 @@ packages:
 
   /@types/mime/3.0.1:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
+    dev: true
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
@@ -3006,24 +3005,28 @@ packages:
       '@types/express': 4.17.15
       '@types/passport': 1.0.12
       '@types/passport-strategy': 0.2.35
-    dev: false
+    dev: true
 
   /@types/passport-strategy/0.2.35:
     resolution: {integrity: sha512-o5D19Jy2XPFoX2rKApykY15et3Apgax00RRLf0RUotPDUsYrQa7x4howLYr9El2mlUApHmCMv5CZ1IXqKFQ2+g==}
     dependencies:
       '@types/express': 4.17.15
       '@types/passport': 1.0.12
+    dev: true
 
   /@types/passport/1.0.12:
     resolution: {integrity: sha512-QFdJ2TiAEoXfEQSNDISJR1Tm51I78CymqcBa8imbjo6dNNu+l2huDxxbDEIoFIwOSKMkOfHEikyDuZ38WwWsmw==}
     dependencies:
       '@types/express': 4.17.15
+    dev: true
 
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
+    dev: true
 
   /@types/range-parser/1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
+    dev: true
 
   /@types/resolve/1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
@@ -3050,6 +3053,7 @@ packages:
     dependencies:
       '@types/mime': 3.0.1
       '@types/node': 18.11.17
+    dev: true
 
   /@types/sharp/0.31.1:
     resolution: {integrity: sha512-5nWwamN9ZFHXaYEincMSuza8nNfOof8nmO+mcI+Agx1uMUk4/pQnNIcix+9rLPXzKrm1pS34+6WRDbDV0Jn7ag==}
@@ -4990,11 +4994,6 @@ packages:
     engines: {node: '>=0.8'}
     dev: true
 
-  /connect-redis/7.0.0:
-    resolution: {integrity: sha512-f7TlBs7J0Zz6y3mSKArBEN6qQ3T8BzsD1+tFSnnbvvCG1PjHllsQU/L7dTEaJsuZgzl/XU9hz+DMiPq1UJQMAQ==}
-    engines: {node: '>=16'}
-    dev: false
-
   /console-control-strings/1.1.0:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
 
@@ -6277,22 +6276,6 @@ packages:
   /expand-template/2.0.3:
     resolution: {integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==}
     engines: {node: '>=6'}
-
-  /express-session/1.17.3:
-    resolution: {integrity: sha512-4+otWXlShYlG1Ma+2Jnn+xgKUZTMJ5QD3YvfilX3AcocOAbIkVylSWEklzALe/+Pu4qV6TYBj5GwOBFfdKqLBw==}
-    engines: {node: '>= 0.8.0'}
-    dependencies:
-      cookie: 0.4.2
-      cookie-signature: 1.0.6
-      debug: 2.6.9
-      depd: 2.0.0
-      on-headers: 1.0.2
-      parseurl: 1.3.3
-      safe-buffer: 5.2.1
-      uid-safe: 2.1.5
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /express/4.18.2:
     resolution: {integrity: sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==}
@@ -9082,6 +9065,7 @@ packages:
     resolution: {integrity: sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
+    requiresBuild: true
     dev: true
 
   /pretty-bytes/5.6.0:
@@ -9149,11 +9133,6 @@ packages:
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
-
-  /random-bytes/1.0.0:
-    resolution: {integrity: sha512-iv7LhNVO047HzYR3InF6pUcUsPQiHTM1Qal51DcGSuZFBil1aBBWG5eHPNek7bvILMaYJ/8RU1e8w1AMdHmLQQ==}
-    engines: {node: '>= 0.8'}
-    dev: false
 
   /randombytes/2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
@@ -10511,13 +10490,6 @@ packages:
     hasBin: true
     dev: true
 
-  /uid-safe/2.1.5:
-    resolution: {integrity: sha512-KPHm4VL5dDXKz01UuEd88Df+KzynaohSL9fBh096KWAxSKZQDI2uBrVqtvRM4rwrIrRRKsdLNML/lnaaVSRioA==}
-    engines: {node: '>= 0.8'}
-    dependencies:
-      random-bytes: 1.0.0
-    dev: false
-
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
     dependencies:
@@ -10626,6 +10598,15 @@ packages:
   /vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  /vee-validate/4.7.4_vue@3.2.47:
+    resolution: {integrity: sha512-pfhKluYimYvSQIiFoIY29NAgl0j24DqPsodlCny/NlOrYbougdjbL1C9yYqmba4Ka3YUY6vOZ0GE2wcwMsKQ5A==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+      vue: 3.2.47
+    dev: false
 
   /vue-class-component/8.0.0-rc.1_vue@3.2.47:
     resolution: {integrity: sha512-w1nMzsT/UdbDAXKqhwTmSoyuJzUXKrxLE77PCFVuC6syr8acdFDAq116xgvZh9UCuV0h+rlCtxXolr3Hi3HyPQ==}
@@ -10754,6 +10735,16 @@ packages:
       vue: 3.2.47
       webpack: 5.75.0
     dev: true
+
+  /vue-property-decorator/9.1.2_e2doaayoza62zgnirihdqfeczy:
+    resolution: {integrity: sha512-xYA8MkZynPBGd/w5QFJ2d/NM0z/YeegMqYTphy7NJQXbZcuU6FC6AOdUAcy4SXP+YnkerC6AfH+ldg7PDk9ESQ==}
+    peerDependencies:
+      vue: '*'
+      vue-class-component: '*'
+    dependencies:
+      vue: 3.2.47
+      vue-class-component: 8.0.0-rc.1_vue@3.2.47
+    dev: false
 
   /vue-router/4.1.6_vue@3.2.47:
     resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}

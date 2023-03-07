@@ -7,7 +7,9 @@ declare module '*.vue' {
 
 declare module '@vue/runtime-core' {
   import type AppSdk from 'app-sdk';
+  import type AuthService from 'app-core/auth';
   interface ComponentCustomProperties {
     $sdk: AppSdk;
+    $auth: AuthService;
   }
 }

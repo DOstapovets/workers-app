@@ -1,7 +1,9 @@
 import type { User } from 'app-types';
-import BaseApi from './BaseApi';
+import { AxiosInstance } from 'axios';
 
-export default class UserApi extends BaseApi {
+export default class UserApi {
+  constructor(private http: AxiosInstance) {}
+
   getUsers(): Promise<User[]> {
     return this.http.get('/user');
   }

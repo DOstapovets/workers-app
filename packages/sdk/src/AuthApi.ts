@@ -1,12 +1,20 @@
+import { AxiosInstance } from 'axios';
 import type { LoginPayload, User } from 'app-types';
-import BaseApi from './BaseApi';
 
-export default class AuthApi extends BaseApi {
+export default class AuthApi {
+  constructor(private http: AxiosInstance) {}
+
   me(): Promise<User> {
-    return this.http.get('/auth/me');
+    return this.http.get<User>('/auth/me').then(({ data }) => data);
   }
 
-  login(payload: LoginPayload): Promise<{ token: string }> {
-    return this.http.post('/auth/login', payload);
+  login(payload: LoginPayload) {
+    return this.http
+      .post<{ token: string }>('/auth/login', payload)
+      .then(({ data }) => data.token);
+  }
+
+  logout(): Promise<void> {
+    return this.http.post('/auth/logout');
   }
 }

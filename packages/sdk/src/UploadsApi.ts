@@ -1,7 +1,9 @@
+import type { AxiosInstance } from 'axios';
 import type { Upload } from 'app-types';
-import BaseApi from './BaseApi';
 
-export default class UploadApi extends BaseApi {
+export default class UploadApi {
+  constructor(private http: AxiosInstance) {}
+
   getUploads(): Promise<Upload[]> {
     return this.http.get('/uploads');
   }

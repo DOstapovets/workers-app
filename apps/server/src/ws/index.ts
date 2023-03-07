@@ -5,7 +5,7 @@ import { Server, Socket } from 'socket.io';
 
 import loggerFactory from 'app-logger';
 import query from 'app-queue';
-import sessionMiddleware from '../utils/session';
+// import { sessionMiddleware } from '../utils/session';
 
 const log = loggerFactory('WS');
 
@@ -21,10 +21,6 @@ export const createWsServer = (server: http.Server) => {
   query.on('global:progress', (jobId, data) => {
     io.send({ jobId, data });
   });
-};
-
-export const bindSession = () => {
-  io.engine.use(sessionMiddleware);
 };
 
 export const bindWsServer = (req: Request) => {

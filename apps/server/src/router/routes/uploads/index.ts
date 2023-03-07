@@ -6,12 +6,9 @@ import uploadsController from './uploads.controller';
 
 const uploadRouter = Router();
 
+uploadRouter.use(passport.authorize('jwt'));
+
 uploadRouter.get('/', uploadsController.get);
-uploadRouter.post(
-  '/',
-  passport.authenticate('jwt'),
-  multer.single('file'),
-  uploadsController.post,
-);
+uploadRouter.post('/', multer.single('file'), uploadsController.post);
 
 export default uploadRouter;
