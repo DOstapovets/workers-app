@@ -36,7 +36,7 @@ passport.use(
 
         req.session = session;
         await session.touch();
-
+        console.log(session);
         done(null, session?.user || false);
       } catch (err) {
         log.error((err as Error)?.message || err);
@@ -53,7 +53,7 @@ passport.use(
 
       const user = await userService.getUser({ username });
 
-      if (!user) done(false);
+      if (!user) return done(false);
 
       const { password: passHash, ...userWithoutPassword } =
         user?.toObject() as User;

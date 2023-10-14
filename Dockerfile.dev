@@ -24,7 +24,7 @@ COPY packages/queue/package.json ./packages/queue/package.json
 COPY packages/db/package.json ./packages/db/package.json
 COPY packages/redis-client/package.json ./packages/redis-client/package.json
 
-RUN npm i -g pnpm && pnpm install
+RUN npm i -g pnpm@7.8 && pnpm install
 
 COPY . .
 

@@ -20,11 +20,18 @@ class UploadsController {
 
   async post(req: Request, res: Response, next: NextFunction) {
     try {
-      const { file, user, body } = req;
+      const { 
+        file,
+        session: { user },
+        body
+      } = req;
+
       log.debug('New upload');
 
-      if (!user) throw new Error('No user');
+      console.log(file);
 
+      if (!user) throw new Error('No user');
+      
       if (file) {
         const upload = await uploadsService.uploadNewFile(file, user._id);
 
@@ -36,9 +43,10 @@ class UploadsController {
         );
 
         res.json(upload);
+      } else {
+        throw new Error('No file or url');
       }
 
-      throw new Error('No file or user');
     } catch (err) {
       next(err);
     }
